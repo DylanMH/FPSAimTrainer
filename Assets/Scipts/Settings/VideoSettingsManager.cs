@@ -1,3 +1,4 @@
+using System.Collections.Generic;
 using TMPro;
 using UnityEngine;
 using UnityEngine.UI;
@@ -28,30 +29,47 @@ public class VideoSettingsManager : MonoBehaviour
         InitializeFrameRateDropdown();
     }
 
-    private void InitializeResolutions()
+    public void InitializeResolutions()
     {
+        // Fetch available resolutions
         availableResolutions = Screen.resolutions;
+
+        if (availableResolutions == null || availableResolutions.Length == 0)
+        {
+            Debug.LogError("No available resolutions found!");
+            return;
+        }
+
+        // Clear the dropdown options
         resolutionDropdown.ClearOptions();
 
         int currentResolutionIndex = 0;
+        List<string> resolutionOptions = new List<string>();
+
         for (int i = 0; i < availableResolutions.Length; i++)
         {
-            string resolutionOption =
-                $"{availableResolutions[i].width} x {availableResolutions[i].height} @ {availableResolutions[i].refreshRateRatio}Hz";
-            resolutionDropdown.options.Add(new TMP_Dropdown.OptionData(resolutionOption));
+            Resolution res = availableResolutions[i];
+            string resolutionOption = $"{res.width} x {res.height} @ {res.refreshRateRatio}Hz";
+            resolutionOptions.Add(resolutionOption);
 
             if (
-                availableResolutions[i].width == Screen.currentResolution.width
-                && availableResolutions[i].height == Screen.currentResolution.height
+                res.width == Screen.currentResolution.width
+                && res.height == Screen.currentResolution.height
             )
             {
                 currentResolutionIndex = i;
             }
         }
 
+        // Populate the dropdown
+        resolutionDropdown.AddOptions(resolutionOptions);
         resolutionDropdown.value = currentResolutionIndex;
         resolutionDropdown.RefreshShownValue();
+
+        // Add listener for changes
         resolutionDropdown.onValueChanged.AddListener(SetResolution);
+
+        Debug.Log("Resolution dropdown initialized successfully");
     }
 
     private void SetResolution(int index)
@@ -117,7 +135,7 @@ public class VideoSettingsManager : MonoBehaviour
         PlayerPrefs.Save();
     }
 
-    public void LoadSavedSettings()
+    private void LoadSavedSettings()
     {
         // Load saved resolution
         if (PlayerPrefs.HasKey("ResolutionIndex"))

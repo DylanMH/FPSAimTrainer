@@ -77,7 +77,7 @@ public class GameSettingsManager : MonoBehaviour
         PlayerPrefs.Save();
     }
 
-    public void LoadSavedSettings()
+    private void LoadSavedSettings()
     {
         // Load saved crosshair type
         if (PlayerPrefs.HasKey("CrosshairType"))
@@ -90,11 +90,10 @@ public class GameSettingsManager : MonoBehaviour
         // Load saved crosshair color
         if (PlayerPrefs.HasKey("CrosshairColor"))
         {
-            Color savedColor;
             if (
                 ColorUtility.TryParseHtmlString(
                     "#" + PlayerPrefs.GetString("CrosshairColor"),
-                    out savedColor
+                    out Color savedColor
                 )
             )
             {
@@ -105,11 +104,10 @@ public class GameSettingsManager : MonoBehaviour
         // Load saved target color
         if (PlayerPrefs.HasKey("TargetColor"))
         {
-            Color savedColor;
             if (
                 ColorUtility.TryParseHtmlString(
                     "#" + PlayerPrefs.GetString("TargetColor"),
-                    out savedColor
+                    out Color savedColor
                 )
             )
             {

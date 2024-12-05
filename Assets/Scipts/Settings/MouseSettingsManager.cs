@@ -88,11 +88,11 @@ public class MouseSettingsManager : MonoBehaviour
         float adjustedSensitivity = currentSensitivity * scalingFactor;
 
         // Assuming a player controller handles look speed, apply the sensitivity here
-        /*         PlayerController playerController = FindObjectOfType<PlayerController>();
-                if (playerController != null)
-                {
-                    playerController.SetMouseSensitivity(adjustedSensitivity);
-                } */
+        PlayerController playerController = FindFirstObjectByType<PlayerController>();
+        if (playerController != null)
+        {
+            playerController.mouseSensitivity = adjustedSensitivity;
+        }
     }
 
     private void UpdateFOV()
