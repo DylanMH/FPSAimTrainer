@@ -57,5 +57,5 @@
 		"Temp/": true
 	},
 	"dotnet.defaultSolution": "FPSAimTrainer.sln",
-	"cSpell.words": ["Dont", "Prefs"]
+	"cSpell.words": ["Dont", "Mathf", "Prefs", "Valorant"]
 }

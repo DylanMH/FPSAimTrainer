@@ -77,7 +77,7 @@ public class GameSettingsManager : MonoBehaviour
         PlayerPrefs.Save();
     }
 
-    private void LoadSavedSettings()
+    public void LoadSavedSettings()
     {
         // Load saved crosshair type
         if (PlayerPrefs.HasKey("CrosshairType"))

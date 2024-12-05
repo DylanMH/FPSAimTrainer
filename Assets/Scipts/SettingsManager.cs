@@ -4,9 +4,12 @@ public class SettingsManager : MonoBehaviour
 {
     public static SettingsManager Instance;
 
-    [Header("Player Settings")]
-    public float mouseSensitivity = 1f;
-    public bool isFullScreen = true;
+    // panels to load settings from
+    [Header("Settings Panels")]
+    public GameObject gameSettingsPanel;
+    public GameObject videoSettingsPanel;
+    public GameObject mouseSettingsPanel;
+    public GameObject audioSettingsPanel;
 
     private void Awake()
     {
@@ -21,18 +24,11 @@ public class SettingsManager : MonoBehaviour
         DontDestroyOnLoad(gameObject); // keep SettingsManager alive across scenes
     }
 
-    public void SaveSettings()
+    private void Start()
     {
-        // Save the player settings
-        PlayerPrefs.SetFloat("MouseSensitivity", mouseSensitivity);
-        PlayerPrefs.SetInt("FullScreen", isFullScreen ? 1 : 0);
-        PlayerPrefs.Save();
-    }
-
-    public void LoadSettings()
-    {
-        // Load the player settings
-        mouseSensitivity = PlayerPrefs.GetFloat("MouseSensitivity", 1f);
-        isFullScreen = PlayerPrefs.GetInt("FullScreen", 1) == 1;
+        gameSettingsPanel.GetComponent<GameSettingsManager>().LoadSavedSettings();
+        videoSettingsPanel.GetComponent<VideoSettingsManager>().LoadSavedSettings();
+        /*         mouseSettingsPanel.GetComponent<MouseSettingsManager>().LoadSavedSettings();
+                audioSettingsPanel.GetComponent<AudioSettingsManager>().LoadSavedSettings(); */
     }
 }
